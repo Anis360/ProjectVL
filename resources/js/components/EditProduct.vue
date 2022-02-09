@@ -12,6 +12,7 @@
                         <label>Detail</label>
                         <input type="text" class="form-control" v-model="product.detail">
                     </div>
+                    <br>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
