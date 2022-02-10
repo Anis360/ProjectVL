@@ -3,7 +3,9 @@
         <h2 class="text-center">Products list</h2>
         <div>
     <b-button @click="modalShow = !modalShow">Add</b-button>
-
+<input type="text"
+         placeholder="Filter"
+         v-model="filter" />
     
   </div>
         <table class="table">
@@ -16,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in products" :key="product.id">
+                <tr v-for="product in filteredRows" :key="product.id">
                     <td>{{product.id}}</td>
                     <td>{{product.name}}</td>
                     <td>{{product.detail}}</td>
@@ -45,7 +47,7 @@ import EditProduct from './EditProduct'
   },
        data(){
            
-          return{products:[], modalShow: false, modalShow1: false}
+          return{products:[],filter:'', modalShow: false, modalShow1: false}
         },
        created(){
             this.axios.get('http://localhost:8000/api/products/').then(response => {
@@ -59,6 +61,19 @@ import EditProduct from './EditProduct'
                     this.products.splice(i, 1)
                 });
             }
-        }
+        },
+        computed: {
+  filteredRows() {
+    return this.products.filter(product => {
+      const name = product.name.toString().toLowerCase();
+      const detail = product.detail.toString().toLowerCase();
+      const searchTerm = this.filter.toLowerCase();
+
+      return name.includes(searchTerm) ||
+        detail.includes(searchTerm);
+    });
+  }
+},
+
     } 
 </script>
