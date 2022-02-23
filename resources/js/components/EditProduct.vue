@@ -22,8 +22,9 @@
 
 <script>
     export default{
+        props: ['product.id'],
         data(){
-            return{product:{}}
+            return{product:{},}
               },
         created(){
             this.axios.get(`http://localhost:8000/api/products/${this.$route.params.id}`).then((res)=> 
