@@ -17,6 +17,7 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('quantity');
+            $table->integer('price');
         });
     }
 

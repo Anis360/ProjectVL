@@ -1,26 +1,32 @@
-import AllProduct from './components/AllProduct.vue';
+import ProductList from './components/ProductList.vue';
 import CreateProduct from './components/CreateProduct.vue';
 import EditProduct from './components/EditProduct.vue';
-import ShoppingCart from './components/ShoppingCart.vue';
+import ShoppingList from './components/ShoppingList.vue';
 
 export const routes = [{
         name: 'home',
         path: '/prodlist',
-        component: AllProduct
+        component: ProductList,
+        children: [
+            {
+              name: 'edit',
+              path: '/edit/:id',
+              component: EditProduct
+            }]
     },
    {
         name: 'create',
         path: '/create',
         component: CreateProduct
     },
-    {
+/*    {
         name: 'edit',
         path: '/edit/:id',
         component: EditProduct
-    },
+    },*/
     {
-        name: 'shopcart',
-        path: '/shopcart',
-        component: ShoppingCart
+        name: 'shoplist',
+        path: '/shoplist',
+        component: ShoppingList
     },
 ];

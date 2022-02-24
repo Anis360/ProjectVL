@@ -36,12 +36,14 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $newItem = new Item;
-        $newItem->name = $request->item['name'];
-        $newItem->save();
+        $item = new item([
+            'name' => $request->input('name'),
+            'quantity' => $request->input('quantity'),
+            'price' => $request->input('price')
+        ]);
+        $item->save();
 
-        return $newItem;
-
+        return response()->json('Item created!');
 
     }
 
@@ -53,7 +55,8 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = item::find($id);
+        return response()->json($item);
     }
 
     /**
@@ -76,16 +79,10 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $existingItem = Item::find($id);  
+        $item = Item::find($id);
+        $item->update($request->all());
 
-        if($existingItem){
-           $existingItem->completed = $request->item['completed'] ? true : false;
-           $existingItem->updated_at = Carbon::now() ;
-           $existingItem->save();
-           return $existingItem;
-
-        } 
-        return "Item not found";
+        return response()->json('Item updated!');
     }
 
     /**
@@ -96,11 +93,9 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $existingItem = Item::find($id);
-        if($existingItem){
-           $existingItem->delete();
-           return "Item deleted";
-    }
-    return "Item not found";
+        $item = item::find($id);
+        $item->delete();
+
+        return response()->json('Item deleted!');
     }
 }
